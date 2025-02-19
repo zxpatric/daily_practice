@@ -33,3 +33,8 @@
 *.exe
 *.out
 *.app
+
+
+# Python environments
+.venv/
+.env
