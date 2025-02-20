@@ -1,10 +1,3 @@
-// Input:
-// n=3
-// edges=[[0,1], [0,2]]
-
-// Output:
-// 1
-
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -12,7 +5,7 @@
 typedef std::pair<int, int> Pair;
 typedef std::vector<Pair> PairList;
 
-void deep_search(const int seed, const PairList &edges, std::vector<bool>& visited)
+void deep_search_mark(const int seed, const PairList &edges, std::vector<bool>& visited)
 {
     // find all the edges from the seed and then do the deep search
     std::vector<PairList::const_iterator> iters;
@@ -40,34 +33,37 @@ void deep_search(const int seed, const PairList &edges, std::vector<bool>& visit
         {
             if (!visited[iter->second])
             {
-                deep_search(iter->second, edges, visited);
+                deep_search_mark(iter->second, edges, visited);
             }
         }
     }
 }
 
-int countComponents(int n, const PairList &edges)
+int countConnectedComponents(int n, const PairList &edges)
 {
     std::vector<bool> visited(n, false);
 
-    const int seed = 0; 
-
-    deep_search(seed, edges, visited);
-
-    return std::count_if(visited.begin(), visited.end(), [](bool val) {
-        return val;
-    });
+    int count = 0;
+    for (int seed = 0; seed < n; ++seed)
+    {
+        if (!visited[seed])
+        {
+            deep_search_mark(seed, edges, visited);
+            ++count;
+        }
+    }
+    return count;
 }
         
 int main ()
 {
     const int num_nodes = 5;
-    PairList list;
-    list.push_back(std::make_pair(0, 1));
-    list.push_back(std::make_pair(0, 2));
-    // list.push_back(std::make_pair(2, 3));
-    list.push_back(std::make_pair(3, 4));
+    PairList a_list;
+    a_list.push_back(std::make_pair(0, 1));
+    a_list.push_back(std::make_pair(0, 2));
+    // a_list.push_back(std::make_pair(2, 3));
+    a_list.push_back(std::make_pair(3, 4));
 
-    std::cout << "number of nodes: " << num_nodes << " and the connect nodes are " << countComponents(num_nodes, list) << std::endl;
+    std::cout << "number of nodes: " << num_nodes << " and the connect nodes are " << countConnectedComponents(num_nodes, a_list) << std::endl;
     return 0;
 }

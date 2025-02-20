@@ -1,12 +1,10 @@
 #include <iostream>
 
-using namespace std;
-
 // Class image within the stack. Use new if it is big and shall be in heap.
 template <typename T, int row, int col>
 struct Image
 {
-    T m_data[row][col];
+    T data_storage_[row][col];
 
     Image()
     {
@@ -14,7 +12,7 @@ struct Image
         {
             for (int j = 0; j < col; j++)
             {
-                m_data[i][j] = i * col + j;
+                data_storage_[i][j] = i * col + j;
             }
         }
     }
@@ -26,18 +24,18 @@ struct Image
         {
             for (int j = 0; j < col; j++)
             {
-                result.m_data[i][j] = m_data[i][j];
+                result.data_storage_[i][j] = data_storage_[i][j];
                 if (i > 0)
                 {
-                    result.m_data[i][j] += result.m_data[i - 1][j];
+                    result.data_storage_[i][j] += result.data_storage_[i - 1][j];
                 }
                 if (j > 0)
                 {
-                    result.m_data[i][j] += result.m_data[i][j - 1];
+                    result.data_storage_[i][j] += result.data_storage_[i][j - 1];
                 }
                 if (i > 0 && j > 0)
                 {
-                    result.m_data[i][j] -= result.m_data[i - 1][j - 1];
+                    result.data_storage_[i][j] -= result.data_storage_[i - 1][j - 1];
                 }
             }
         }
@@ -52,48 +50,48 @@ struct Image
             for (int j = 0; j < col; j++)
             {
                 int count = 1;
-                result.m_data[i][j] = m_data[i][j];
+                result.data_storage_[i][j] = data_storage_[i][j];
                 if (i > 0)
                 {
-                    result.m_data[i][j] += m_data[i - 1][j];
+                    result.data_storage_[i][j] += data_storage_[i - 1][j];
                     ++count;
                 }
                 if (i < row-1)
                 {
-                    result.m_data[i][j] += m_data[i + 1][j];
+                    result.data_storage_[i][j] += data_storage_[i + 1][j];
                     ++count;
                 }
                 if (j > 0)
                 {
-                    result.m_data[i][j] += m_data[i][j - 1];
+                    result.data_storage_[i][j] += data_storage_[i][j - 1];
                     ++count;
                 }
                 if(j < col-1)
                 {
-                    result.m_data[i][j] += m_data[i][j + 1];
+                    result.data_storage_[i][j] += data_storage_[i][j + 1];
                     ++count;
                 }
                 if (i > 0 && j > 0)
                 {
-                    result.m_data[i][j] += m_data[i - 1][j - 1];
+                    result.data_storage_[i][j] += data_storage_[i - 1][j - 1];
                     ++count;
                 }
                 if (i > 0 && j < col-1)
                 {
-                    result.m_data[i][j] += m_data[i - 1][j + 1];
+                    result.data_storage_[i][j] += data_storage_[i - 1][j + 1];
                     ++count;
                 }
                 if (i < row-1 && j > 0)
                 {
-                    result.m_data[i][j] += m_data[i + 1][j - 1];
+                    result.data_storage_[i][j] += data_storage_[i + 1][j - 1];
                     ++count;
                 }
                 if (i < row-1 && j < col-1)
                 {
-                    result.m_data[i][j] += m_data[i + 1][j + 1];
+                    result.data_storage_[i][j] += data_storage_[i + 1][j + 1];
                     ++count;
                 }
-                result.m_data[i][j] /= (T)count;
+                result.data_storage_[i][j] /= (T)count;
             }
 
         }
@@ -107,9 +105,9 @@ struct Image
         {
             for (int j = 0; j < col; j++)
             {
-                cout << m_data[i][j] << ",";
+                std::cout << data_storage_[i][j] << ",";
             }
-            cout << endl;
+            std::cout << std::endl;
         }
     }
 };

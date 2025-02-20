@@ -1,59 +1,57 @@
 #include <vector>
 #include <iostream>
 
-using namespace std;
-
 // This SimpleDQueue implementes a fixed size dqueue
 template <typename T>
 struct SimpleDQueue
 {
-    vector<T> m_data;
-    int m_fixed_size;
+    std::vector<T> data_storage_;
+    int data_size_;
 
     SimpleDQueue(int fixed_size){
-        m_data.reserve(fixed_size);
-        m_fixed_size = fixed_size;
+        data_storage_.reserve(fixed_size);
+        data_size_ = fixed_size;
     }
 
     void push_back(T val)
     {
-        if (m_data.size() == m_fixed_size)
+        if (data_storage_.size() == data_size_)
         {
             throw std::out_of_range("Queue is full");
         }
-        m_data.push_back(val);
+        data_storage_.push_back(val);
     }
 
     void pop_front()
     {
-        m_data.erase(m_data.begin());
+        data_storage_.erase(data_storage_.begin());
     }
 
     void push_front(T val)
     {
-        if (m_data.size() == m_fixed_size)
+        if (data_storage_.size() == data_size_)
         {
             throw std::out_of_range("Queue is full");
         }
-        m_data.insert(m_data.begin(), val);
+        data_storage_.insert(data_storage_.begin(), val);
     }
 
     void pop_back()
     {
-        if (m_data.size() > 0)
+        if (data_storage_.size() > 0)
         {
-            m_data.pop_back();
+            data_storage_.pop_back();
         }
     }
 
     void print()
     {
-        cout << "Queue size: " << m_data.size() << endl;
-        for (auto &val : m_data)
+        std::cout << "Queue size: " << data_storage_.size() << std::endl;
+        for (auto &val : data_storage_)
         {
-            cout << val << ",";
+            std::cout << val << ",";
         }
-        cout << endl;
+        std::cout << std::endl;
     }
 };
 
@@ -64,15 +62,13 @@ int main()
 
     for (size_t i = 0; i <= count ; i++)
     {
-        /* code */
         try
         {
-            /* code */
             a_dqueue.push_back(i);
         }
         catch(const std::exception& e)
         {
-            std::cerr << e.what() << " when pushing a value " << i << endl;
+            std::cerr << e.what() << " when pushing a value " << i << std::endl;
         }
     }
     a_dqueue.print();
@@ -85,7 +81,6 @@ int main()
 
     for (size_t i = 0; i < count ; i++)
     {
-        /* code */
         a_dqueue.pop_back();
     }
 
