@@ -4,14 +4,13 @@ from sklearn.datasets import make_blobs
 from sklearn.cluster import KMeans
 
 if __name__ == "__main__":
-    # Load data
-    # data = np.loadtxt("data.txt")
-    # data = np.random.rand(100, 2)
-    X,y = make_blobs(n_samples = 500,n_features = 2,centers = 3,random_state = 23)
-
-    # print(X, y)
-
+    
     np.random.seed(20)
+
+    X,_ = make_blobs(n_samples = 500,n_features = 2,centers = 3,random_state = 23)
+    # X = np.random.rand(500, 2)  # The rand function will generate very randonly distributed data
+    
+    # print (X)
 
     # Number of clusters
     k = 3
@@ -21,7 +20,7 @@ if __name__ == "__main__":
     kmeans = KMeans(n_clusters=k, random_state=0, n_init="auto")
     kmeans.fit(X)
     centers = kmeans.cluster_centers_
-    print("Cluster centers:", centers)
+    print("Cluster centers by sklearn.KMeans:\n", centers)
     
 
     # self implementation. The consistency is pretty good
@@ -45,5 +44,6 @@ if __name__ == "__main__":
     for i in range(k):
         clusters[i]["center"] = np.mean(clusters[i]["points"], axis=0)
 
+    print("Cluster centers by randomly generated seeds:")
     for i in range(k):
         print(clusters[i]["center"])
