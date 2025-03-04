@@ -11,4 +11,7 @@ if __name__ == "__main__":
     nums = [2, 7, 11, 15]
     target = 22
     result = two_sum(nums, target)
+    # multiplier = lambda v : v
+    # result_b = list(map(multiplier, result))
+    # print(result_b)
     print(result)  # Output: [0, 1]

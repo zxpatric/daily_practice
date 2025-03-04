@@ -51,12 +51,6 @@ int minimum_jump(const std::vector<int>& nums)
             steps_out.at(i) = minimum_step;
     }
 
-    // for (auto el : steps_out)
-    // {
-    //     std::cout << el << ",";       
-    // }
-    // std::cout << std::endl;
-
     return steps_out[0];
 }
 

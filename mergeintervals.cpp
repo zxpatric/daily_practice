@@ -43,11 +43,11 @@ PairList merge_intervals_sorted(const PairList &list)
 int main   ()
 {
     PairList a_list;
-    a_list.push_back(std::make_pair(1, 2));
-    a_list.push_back(std::make_pair(3, 4));
-    a_list.push_back(std::make_pair(1, 6));
-    a_list.push_back(std::make_pair(7, 8));
-    a_list.push_back(std::make_pair(13, 16));
+    a_list.push_back({1, 2});
+    a_list.push_back({3, 4});
+    a_list.push_back({1, 6});
+    a_list.push_back({7, 8});
+    a_list.push_back({13, 16});
 
     // O(nlog(n)) sort
     std::sort(a_list.begin(), a_list.end(), [](const Pair &a, const Pair &b) {
