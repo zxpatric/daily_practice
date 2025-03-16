@@ -2,15 +2,8 @@
 #include <vector>
 #include <algorithm>
 
-typedef std::pair<int, int> Pair;
-typedef std::vector<Pair> PairList;
-
-bool is_overlap_sorted(const Pair &a, const Pair &b)
-{
-    // didn't get the b.end >= a.first && b.end <= a.second into consider since the pairs are sorted by .first.
-    return a.first <= b.first && a.second >= b.first;
-}
-
+using Pair = std::pair<int, int>;
+using PairList = std::vector<Pair>;
 
 PairList merge_intervals_sorted(const PairList &list)
 {
@@ -18,7 +11,6 @@ PairList merge_intervals_sorted(const PairList &list)
     new_list.reserve(list.size());
     for (auto &pair : list)
     {
-        // std::cout << pair.first << "," << pair.second << std::endl;
         if (new_list.empty())
         {
             new_list.push_back(pair);
@@ -26,7 +18,7 @@ PairList merge_intervals_sorted(const PairList &list)
         else
         {
             Pair &last = new_list.back();
-            if (is_overlap_sorted(last, pair))
+            if (last.second >= pair.first)
             {
                 last.second = std::max(last.second, pair.second);
             }
