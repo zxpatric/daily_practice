@@ -46,8 +46,8 @@ if __name__ == "__main__":
     # Input: x = 120
     # Output: 21
 
-    value_: int = -1200
-    # value_: int = 120
+    # value_: int = -1200
+    value_: int = 120
 
     # result = reverse_int(value_)
     result = reverse_int_mod(value_)

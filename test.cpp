@@ -136,6 +136,10 @@ constexpr int product(int x, int y) { return (x * y); }
   
 int main()
 {
+    std::string s1 = "world";
+    std::string s2 = std::move(s1); // s1 becomes an xvalue after std::move
+    std::cout << "Xvalue example: " << s2 << " s1 is no more " << s1 << std::endl;
+
     constexpr int ca = 10*std::abs(-5);
 
     X xx(10);

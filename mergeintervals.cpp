@@ -20,10 +20,12 @@ PairList merge_intervals_sorted(const PairList &list)
             Pair &last = new_list.back();
             if (last.second >= pair.first)
             {
+                // merge if overlapped
                 last.second = std::max(last.second, pair.second);
             }
             else
             {
+                // push in the new one if not
                 new_list.push_back(pair);
             }
         }
