@@ -21,7 +21,7 @@ def maximum_capital(c, k, capitals, profits):
             heappush(captials_max_heap, -capitals_min_heap[0][1])
             heappop(capitals_min_heap)
 
-        c += -captials_max_heap[0]
+        c += -captials_max_heap[0]  #python only has min-heap. Negate value to create max-heap.
         heappop(captials_max_heap)
         k -= 1
 
