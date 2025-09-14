@@ -14,14 +14,11 @@ if __name__ == "__main__":
 
     # Number of clusters
     k = 3
+
     # Number of iterations. Not used in this algorithm implementation. But is a parameter for the KMean class.
-    n_iter = 100
-    # Run k-mean
-    kmeans = KMeans(n_clusters=k, random_state=0, n_init="auto")
-    kmeans.fit(X)
-    centers = kmeans.cluster_centers_
-    print("Cluster centers by sklearn.KMeans:\n", centers)
-    
+    n_iter = 10
+    #surprisingly, the centeroid calculation converges in one iteration in this particular implementation
+    # n_iter = 1
 
     # self implementation. The consistency is pretty good
     #create three random centroids
@@ -32,18 +29,32 @@ if __name__ == "__main__":
     for i in range(k):
         clusters[i] =  {"center": centroids[i], "points": []}
 
-    for pt in X:
-        dists = []
+    for _ in range(n_iter):
+        for pt in X:
+            dists = []
+            for i in range(k):
+                dist = np.linalg.norm(centroids[i] - pt, axis=0)
+                dists.append(dist)
+            closest_centroid = np.argmin(dists)
+            clusters[closest_centroid]["points"].append(pt)
+
+        #upgrade the centroids to the mean of the group
         for i in range(k):
-            dist = np.linalg.norm(centroids[i] - pt, axis=0)
-            dists.append(dist)
-        closest_centroid = np.argmin(dists)
-        clusters[closest_centroid]["points"].append(pt)
+            clusters[i]["center"] = np.mean(clusters[i]["points"], axis=0)
+            
+            #print the loss.
+            print("centeroid ", i , " has a loss value of ", 
+                  np.sum((clusters[i]["points"] - clusters[i]["center"])**2))
+            
+            #clear the points for the next iteration            
+            clusters[i]["points"] = [] 
 
-    #upgrade the centroids to the mean of the group
-    for i in range(k):
-        clusters[i]["center"] = np.mean(clusters[i]["points"], axis=0)
 
-    print("Cluster centers by randomly generated seeds:")
     for i in range(k):
         print(clusters[i]["center"])
+
+    # # Run k-mean from sklearn. Library call for ground truth comparison.
+    # kmeans = KMeans(n_clusters=k, random_state=0, n_init="auto")
+    # kmeans.fit(X)
+    # centers = kmeans.cluster_centers_
+    # print("Cluster centers by sklearn.KMeans:\n", centers)
